@@ -1,58 +1,63 @@
-public class Student {
-    // Instance variables
-    public String name;
-    public String id;
-    public float cgpa;
-    public int creditCompleted;
+package AbstractClass;
 
-    // Constructor – we will discuss later
-    /*public Student(String name, String id, float cgpa, int creditCompleted) {
-        this.name = name;
-        this.id = id;
-        this.cgpa = cgpa;
-        this.creditCompleted = creditCompleted;
-    }*/
+/*  We have to calculate the percentage of marks obtained in three subjects (each out of 100)
+    by student A and in four subjects (each out of 100) by student B. Create an abstract class 'Student'
+    with an abstract method 'getPercentage'. It is inherited by two other classes 'A' and 'B' each having
+    a method with the same name which returns the percentage of the students. The constructor of student A
+    takes the marks in three subjects as its parameters and the marks in four subjects as its parameters for student B.
+    Create an object for eac of the two classes and print the percentage of marks for both the students. */
 
-    public void updateCgpa(int credit, float gpa) {
-        cgpa = (cgpa * creditCompleted + credit * gpa) / (creditCompleted + credit);
-        creditCompleted = creditCompleted + credit;
+public abstract class Student {
+    double marksPhysics;
+    double marksChemistry;
+    double marksMath;
+    double marksBiology;
+
+    public Student(double marksPhysics, double marksChemistry, double marksMath){
+        this.marksPhysics = marksPhysics;
+        this.marksChemistry = marksChemistry;
+        this.marksMath = marksMath;
     }
 
-    public float getCgpa() {
-        return cgpa;
+    public Student(double marksPhysics, double marksChemistry, double marksMath, double marksBiology){
+        this.marksPhysics = marksPhysics;
+        this.marksChemistry = marksChemistry;
+        this.marksMath = marksMath;
+        this.marksBiology = marksBiology;
     }
 
-    public void printStudent(){
-        System.out.println("Name: " + name);
-        System.out.println("ID: " + id);
-        System.out.println("CGPA: " + cgpa);
-        System.out.println("Credit: " + creditCompleted);
+    abstract double getPercentage();
+
+}
+
+class StudentA extends Student{
+    public StudentA(double marksPhysics, double marksChemistry, double marksMath){
+        super(marksPhysics,marksChemistry,marksMath);
+    }
+
+    @Override
+    double getPercentage() {
+        return ((marksPhysics + marksChemistry + marksMath) / 300) * 100;
     }
 }
 
-class TestStudent{
-    public static void main(String[] args) {
-        Student std1, std2;
-        std1 = new Student();
-        std2 = new Student();
-
-        std1.name = "Rahim";
-        std1.id = "011222263";
-        std1.cgpa = 3.33f;
-        std1.creditCompleted = 18;
-
-        System.out.println(std1.name+"\n" + std1.id+"\n" + std1.cgpa+"\n" + std1.creditCompleted);
-
-        std2.name = "Karim";
-        std2.id = "011222264";
-        std2.cgpa = 3.67f;
-        std2.creditCompleted = 20;
-
-        System.out.println(std2.name+"\n" + std2.id+"\n" + std2.cgpa+"\n" + std2.creditCompleted);
-
-        std1.printStudent();
-        System.out.println("");
-        std2.printStudent();
+class StudentB extends Student{
+    public StudentB(double marksPhysics, double marksChemistry, double marksMath, double marksBiology){
+        super(marksPhysics, marksChemistry,marksMath,marksBiology);
     }
 
+    @Override
+    double getPercentage() {
+        return ((marksPhysics + marksChemistry + marksMath + marksBiology) / 400) * 100;
+    }
+}
+
+class MarksPercentage{
+    public static void main(String[] args) {
+        Student studentA = new StudentA(78,86,82);
+        System.out.println("The obtained mark percentage of Student A : " + studentA.getPercentage());
+
+        Student studentB = new StudentB(87,85,81,90);
+        System.out.println("The obtained mark percentage of Student B : " + studentB.getPercentage());
+    }
 }
