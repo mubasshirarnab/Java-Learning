@@ -1,73 +1,62 @@
-package LabManualInheritance;
+package AbstractClass;
 
-public class Bank {
-    public String name;
-    private String id;
-    private double balance;
+/*     Create an abstract class 'Bank' with an abstract method 'getBalance'. $100, $150 and $200 are deposited
+       in banks A, B and C respectively. 'BankA', 'BankB' and 'BankC' are subclasses of class 'Bank',
+       each having a method named 'getBalance'. Call this method by creating an object of each of the three classes.  */
 
-    static {
-        System.out.println("Welcome to Bangladesh Bank.");
-    }
-    public Bank(){
-        System.out.println("You are now in the Bank");
-    }
-    public Bank(String name, String id, double balance){
-        this.name = name;
-        this.id = id;
+public abstract class Bank {
+    double balance;
+
+    public Bank(double balance){
         this.balance = balance;
     }
 
-    public double getBalance() {
-        return balance;
+    abstract void getBalance(double amount);
+}
+
+class BankA extends Bank{
+    public BankA(double balance){
+        super(balance);
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    @Override
+    void getBalance(double amount) {
+        balance+=amount;
+        System.out.println("The Balance is: " + balance + "/-");
+    }
+}
+class BankB extends Bank{
+    public BankB(double balance){
+        super(balance);
     }
 
-    public String getId() {
-        return id;
+    @Override
+    void getBalance(double amount) {
+        balance+=amount;
+        System.out.println("The Balance is: " + balance + "/-");
+    }
+}
+class BankC extends Bank{
+    public BankC(double balance){
+        super(balance);
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    void deposit(double amount){
-        balance += amount;
-    }
-
-    void withdraw(double amount){
-        if (balance > amount){
-            balance -= amount;
-        }
-    }
-
-    void checkBalance(){
-        System.out.println("Current Balance: " + balance);
+    @Override
+    void getBalance(double amount) {
+        balance+=amount;
+        System.out.println("The Balance is: " + balance + "/-");
     }
 }
 
-class savingsAccount extends Bank{
-
-    private double interestRate;
-    public int year;
-    public savingsAccount(){
-        System.out.println("Savings Account");
-    }
-    public savingsAccount(double interestRate, int year){
-        super("Rahim", "123", 5000);
-        this.interestRate = interestRate;
-        this.year = year;
-    }
-
-}
-class Main{
+class TestBalance{
     public static void main(String[] args) {
-        Bank A = new savingsAccount(1.2,2);
-        A.deposit(2000);
-        A.checkBalance();
-        A.withdraw(1000);
-        A.checkBalance();
+        Bank A = new BankA(5000);
+        A.getBalance(2000);
+
+        Bank B = new BankB(7000);
+        B.getBalance(1500);
+
+        Bank C = new BankC(10000);
+        C.getBalance(5000);
     }
 }
